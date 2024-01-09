@@ -1,16 +1,13 @@
-
 {
   "name": "rajinikanth-student-registration-server",
   "version": "1.0.0",
-  "description": "Backend server for the Rajinikanth Student Registration app",
+  "description": "Backend server for Rajinikanth Student Registration app",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.12.3",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0"
+    "mongoose": "^5.12.3"
   }
 }
