@@ -1,56 +1,50 @@
 import React, { useState } from 'react';
-import './App.css'; // Make sure to create an App.css for styling
 
 function App() {
+  // State hooks for form inputs and message
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isLogin, setIsLogin] = useState(true);
 
-  const isValidGmail = (email) => {
-    return /^[a-zA-Z0-9._%+-]+@gmail\.com$/i.test(email.trim());
-  };
-
+  // Handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(''); // Clear previous messages
-
-    if (!isValidGmail(email)) {
-      setMessage('Only Gmail accounts are allowed.');
+    if (!email.endsWith('@gmail.com')) {
+      setMessage('Please use a Gmail account.');
       return;
     }
-
-    // Construct the endpoint depending on the action (login or registration)
-    const endpoint = isLogin ? 'login' : 'register';
-    const url = `http://3.108.235.184:5000/users/${endpoint}`;
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, username, password }),
-      });
-      const data = await response.json();
-      setMessage(data.message);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    // Implement registration or login logic here
+    setMessage('Form submitted. Check the console for details.');
+    console.log({ email, password });
   };
 
   return (
-    <div className="app-container">
-      <h1>{isLogin ? 'Login' : 'Register'} - Rajinikanth Student Registration</h1>
-      <form onSubmit={handleSubmit} className="form">
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        {!isLogin && <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />}
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
+    <div style={{ backgroundColor: 'lightblue', padding: '20px' }}>
+      <h2>Rajinikanth Student Registration</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ margin: '5px 0' }}
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ margin: '5px 0' }}
+          />
+        </div>
+        <button type="submit" style={{ margin: '5px 0' }}>
+          Register
+        </button>
       </form>
-      {message && <p className="message">{message}</p>}
-      <button onClick={() => setIsLogin(!isLogin)} className="toggle-button">
-        Switch to {isLogin ? 'Register' : 'Login'}
-      </button>
+      {message && <p>{message}</p>}
     </div>
   );
 }
